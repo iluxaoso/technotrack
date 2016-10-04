@@ -24,6 +24,7 @@ int main()
     int nRoots = SqEquation(a, b, c, &x1, &x2);
 
     Switcher(nRoots, x1, x2);
+    
     return 0;
 }
 
@@ -54,7 +55,9 @@ int SqEquation(double a, double b, double c, double* x1, double* x2)
 {
     if (IsZero(a))
         return LinearEquation(b,c,x1);
+
     double D = b*b-4*a*c;
+
     if (D < 0)
         return 0;
     else if (D == 0)
@@ -88,12 +91,15 @@ void Switcher(int nRoots, double x1, double x2)
     case 1:
         printf("x = %lg\n" , x1);
         break;
+
     case 0:
         printf("No roots\n");
         break;
+
     case INF_ROOTS:
         printf("Infinity roots\n");
         break;
+
     default:
         printf("Wrong number nRoots:%d\n", nRoots);
     }
