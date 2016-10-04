@@ -5,6 +5,28 @@
 const int INF_ROOTS = -1;
 const double EPS = 1E-6;
 
+int IsZero(float );
+int LinearEquation(double , double , double* );
+int SqEquation(double , double , double , double* , double* );
+void OutputText();
+void Switcher(int , double, double );
+
+
+int main()
+{
+    OutputText();
+
+    double a = 0, b = 0, c = 0;
+    double x1 = 0, x2 = 0;
+
+    scanf("%lg %lg %lg", &a, &b, &c);
+
+    int nRoots = SqEquation(a, b, c, &x1, &x2);
+
+    Switcher(nRoots, x1, x2);
+    return 0;
+}
+
 int IsZero(float a)
 {
     return fabs(a) < EPS;
@@ -48,18 +70,14 @@ int SqEquation(double a, double b, double c, double* x1, double* x2)
     }
 }
 
-int main()
+void OutputText()
 {
     printf("SqEquation v1.0, 2016\n");
     printf("Enter a, b, c:\n");
+}
 
-    double a = 0, b = 0, c = 0;
-    double x1 = 0, x2 = 0;
-
-    scanf("%lg %lg %lg", &a, &b, &c);
-
-    int nRoots = SqEquation(a, b, c, &x1, &x2);
-
+void Switcher(int nRoots, double x1, double x2)
+{
     switch(nRoots)
     {
     case 2:
@@ -68,7 +86,7 @@ int main()
         break;
 
     case 1:
-        printf("x1 = %lg\n", x1);
+        printf("x = %lg\n" , x1);
         break;
     case 0:
         printf("No roots\n");
@@ -79,5 +97,4 @@ int main()
     default:
         printf("Wrong number nRoots:%d\n", nRoots);
     }
-    return 0;
 }
