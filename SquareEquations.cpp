@@ -9,6 +9,9 @@ int IsZero(float );
 int LinearEquation(double , double , double* );
 int SqEquation(double , double , double , double* , double* );
 void OutputText();
+
+// TODO:  Подбери название получше. Название функции должно чётко отражать
+// содержимое. PrintRoots подходит куда лучше).
 void Switcher(int , double, double );
 
 
@@ -24,7 +27,7 @@ int main()
     int nRoots = SqEquation(a, b, c, &x1, &x2);
 
     Switcher(nRoots, x1, x2);
-    
+
     return 0;
 }
 
