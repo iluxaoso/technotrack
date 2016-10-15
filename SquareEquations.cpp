@@ -9,10 +9,7 @@ int IsZero(float );
 int LinearEquation(double , double , double* );
 int SqEquation(double , double , double , double* , double* );
 void OutputText();
-
-// TODO:  Подбери название получше. Название функции должно чётко отражать
-// содержимое. PrintRoots подходит куда лучше).
-void Switcher(int , double, double );
+void PrintRoots(int , double, double );
 
 
 int main()
@@ -26,7 +23,7 @@ int main()
 
     int nRoots = SqEquation(a, b, c, &x1, &x2);
 
-    Switcher(nRoots, x1, x2);
+    PrintRoots(nRoots, x1, x2);
 
     return 0;
 }
@@ -82,7 +79,7 @@ void OutputText()
     printf("Enter a, b, c:\n");
 }
 
-void Switcher(int nRoots, double x1, double x2)
+void PrintRoots(int nRoots, double x1, double x2)
 {
     switch(nRoots)
     {
