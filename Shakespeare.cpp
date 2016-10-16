@@ -4,18 +4,25 @@
 #include <string.h>
 #include <assert.h>
 #include <io.h>
-
-//!defines
-
+#include <ctype.h>
 
 //!functions
-char * GetDocName  ();
-char * ReadBuffer  (const char * , int * );
-char * MakeStrings (char ** , const char * , int , int );
-char * OutputFile  ();
-int    CountLines  (char * , int );
-int CompareFirst  (const void * , const void * );
-void PrintStrings  (char ** , int ,char * );
+//!input & output
+char * GetDocName   ();
+char * OutputFile   ();
+
+//!get strings from the file
+char * ReadBuffer   (const char * , int * );
+char * MakeStrings  (char ** , const char * , int , int );
+int    CountLines   (char * , int );
+
+//!compare strings
+int    CompareFirst (const void * , const void * );
+int    CompareLast  (const void * , const void * );
+int    strcmplast   (const char * , const char * );
+
+//!print strings
+void   PrintStrings (char ** , int ,char * );
 
 using namespace std;
 
@@ -30,11 +37,11 @@ int main()
     char ** strings = (char **)calloc(nLines, sizeof(* strings));
 
     MakeStrings(strings, buffer, nLines, size);
-    qsort(strings, nLines, sizeof (char *), CompareFirst);
+    qsort(strings, nLines, sizeof (char *), CompareLast);
     PrintStrings(strings, nLines, filename2);
 
     free(filename);
-    //free(buffer);
+    free(buffer);
     free(strings);
 
     return 0;
@@ -113,12 +120,56 @@ int CountLines(char * strings, int len)
 
 int CompareFirst(const void * a, const void * b)
 {
-    return strcasecmp ( * ( char ** ) a, * ( char ** ) b );
+    return strcasecmp(*(char **) a, *( char **) b);
+}
+
+int CompareLast(const void * a, const void * b)
+{
+    return strcmplast(*(char **) a, *(char **) b);
+}
+
+int strcmplast(const char * s1, const char * s2)
+{
+    const char * EndFirst = s1 + strlen(s1) - 1;
+    const char * EndSecond = s2 + strlen(s2) - 1;
+
+    while (EndFirst > s1 && EndSecond > s2)
+    {
+        char lows1 = tolower(* EndFirst);
+        char lows2 = tolower(* EndSecond);
+
+        if (!isalpha(lows1) && !isalpha(lows2))
+        {
+            EndFirst--;
+            EndSecond--;
+            continue;
+        }
+
+        if (!isalpha(lows1) && isalpha(lows2))
+        {
+            EndFirst--;
+            continue;
+        }
+
+        if (isalpha(lows1) && !isalpha(lows2))
+        {
+            EndSecond--;
+            continue;
+        }
+
+        if (lows1 > lows2)
+            return 1;
+        if (lows2 > lows1)
+            return -1;
+        EndFirst--;
+        EndSecond--;
+    }
+    return 0;
 }
 
 char * OutputFile()
 {
-    printf("Input the filename\n where you want to printout new strings:\n");
+    printf("Input the filename\nwhere you want to printout new strings:\n");
 
     char * OutFilename = (char *)calloc(100, sizeof(* OutFilename));
     fgets(OutFilename, 100, stdin);
