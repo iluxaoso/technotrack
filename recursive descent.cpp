@@ -11,7 +11,7 @@ double GetP   ();
 double GetN   ();
 
 //!Function get expression
-int    get_str();
+int    get_exp();
 
 
 char *s;
