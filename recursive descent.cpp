@@ -26,7 +26,7 @@ int main()
 
     free(str);
 
-//    system("pause");
+    system("pause");
 
     return 0;
 }
